@@ -16,7 +16,7 @@ from contextlib import redirect_stdout
 from io import StringIO
 
 # ✅ Load stock data
-df = pd.read_csv("C:/Hybrid_Vector_Test/sp500_companies.csv")
+df = pd.read_csv("sp500_companies.csv")
 
 # ✅ Select Columns to Use
 df = df[[
