@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hybrid-vectorizer"
+version = "0.1.1"
+description = "Unified embedding for tabular, text, and multimodal data"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "Hari Narayanan", email = "hari.dataprojects@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+keywords = ["machine-learning", "embeddings", "similarity-search", "multimodal", "vectorization"]
+dependencies = [
+    "pandas>=1.3.0",
+    "numpy>=1.21.0",
+    "scikit-learn>=1.0.0",
+    "sentence-transformers>=2.0.0",
+    "torch>=1.9.0",
+    "joblib>=1.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/hariharaprabhu/hybrid-vectorizer"
+Repository = "https://github.com/hariharaprabhu/hybrid-vectorizer"
+Issues = "https://github.com/hariharaprabhu/hybrid-vectorizer/issues"
+Documentation = "https://github.com/hariharaprabhu/hybrid-vectorizer#readme"
+
+[project.optional-dependencies]
+dev = ["pytest>=6.0", "black>=21.0", "flake8>=3.8"]
+test = ["pytest>=6.0"]
+
+[tool.setuptools]
+packages = ["hybrid_vectorizer"]
+
+[tool.setuptools.package-data]
+hybrid_vectorizer = ["*.py"]
