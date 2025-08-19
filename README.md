@@ -4,6 +4,20 @@
 
 HybridVectorizer automatically handles mixed data types (numerical, categorical, text, dates) and creates high-quality vector representations for similarity search, recommendation systems, and machine learning pipelines.
 
+# HybridVectorizer
+**Late-fusion embeddings for mixed tabular + text data.** One line to vectorize text + numeric + categorical into a single search space with adjustable block weights.
+
+[![PyPI Version](https://img.shields.io/pypi/v/hybrid-vectorizer)](https://pypi.org/project/hybrid-vectorizer/)
+[![License](https://img.shields.io/github/license/hariharaprabhu/hybrid-vectorizer)](LICENSE.txt)
+[![Downloads](https://static.pepy.tech/badge/hybrid-vectorizer)](https://pepy.tech/project/hybrid-vectorizer)
+[![Build](https://github.com/hariharaprabhu/hybrid-vectorizer/actions/workflows/ci.yml/badge.svg)](https://github.com/hariharaprabhu/hybrid-vectorizer/actions)
+
+**Quick links:**  
+• **PyPI** · https://pypi.org/project/hybrid-vectorizer/  
+• **Examples** · https://github.com/hariharaprabhu/hybrid-vectorizer/tree/main/Examples  
+• **Issues** · https://github.com/hariharaprabhu/hybrid-vectorizer/issues
+
+
 # Quick Start
 
 ## Basic Usage
