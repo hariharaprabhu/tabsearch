@@ -12,7 +12,10 @@ HybridVectorizer automatically handles mixed data types (numerical, categorical,
 [![Downloads](https://static.pepy.tech/badge/hybrid-vectorizer)](https://pepy.tech/project/hybrid-vectorizer)
 [![Build](https://github.com/hariharaprabhu/hybrid-vectorizer/actions/workflows/ci.yml/badge.svg)](https://github.com/hariharaprabhu/hybrid-vectorizer/actions)
 
+
+
 **Quick links:**  
+• **Google Colab** . https://colab.research.google.com/drive/1mURspqx-rsfgnoH1cKQM49AmxT_mCFf_?usp=sharing
 • **PyPI** · https://pypi.org/project/hybrid-vectorizer/  
 • **Examples** · https://github.com/hariharaprabhu/hybrid-vectorizer/tree/main/Examples  
 • **Issues** · https://github.com/hariharaprabhu/hybrid-vectorizer/issues
