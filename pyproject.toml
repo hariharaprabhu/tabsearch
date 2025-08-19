@@ -43,9 +43,10 @@ gpu = ["torch>=1.9.0"]              # or point to a README note for CUDA-specifi
 [project.urls]
 Homepage = "https://github.com/hariharaprabhu/hybrid-vectorizer"
 Repository = "https://github.com/hariharaprabhu/hybrid-vectorizer"
-Example Notebooks = "https://github.com/hariharaprabhu/hybrid-vectorizer/Examples"
+"Example Notebooks" = "https://github.com/hariharaprabhu/hybrid-vectorizer/tree/main/Examples"
 Issues = "https://github.com/hariharaprabhu/hybrid-vectorizer/issues"
 Documentation = "https://github.com/hariharaprabhu/hybrid-vectorizer#readme"
+
 
 
 [tool.setuptools]
