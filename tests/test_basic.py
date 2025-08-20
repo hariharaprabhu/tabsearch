@@ -16,7 +16,8 @@ from contextlib import redirect_stdout
 from io import StringIO
 
 # ✅ Load stock data
-df = pd.read_csv("sp500_companies.csv")
+RAW_MAIN = "https://raw.githubusercontent.com/hariharaprabhu/hybrid-vectorizer/main/Examples/Similar%20Stock%20Tickers/sp500_companies.csv"
+df = pd.read_csv(RAW_MAIN)
 
 # ✅ Select Columns to Use
 df = df[[
