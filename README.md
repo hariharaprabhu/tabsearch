@@ -33,7 +33,7 @@ pip install tabsearch
 **Hello World example:**
 ```python
 import pandas as pd
-from mixed_data_vectorizer import HybridVectorizer
+from tabsearch import HybridVectorizer
 
 # Simple mixed dataset
 df = pd.DataFrame({
@@ -53,7 +53,7 @@ print(results)  # Finds id=3 (both Tech + high price) over id=2 (different categ
 
 ```python
 import pandas as pd
-from mixed_data_vectorizer import HybridVectorizer
+from tabsearch import HybridVectorizer
 
 # Load real S&P 500 dataset
 df = pd.read_csv("https://raw.githubusercontent.com/hariharaprabhu/tabsearch/main/Examples/Similar%20Stock%20Tickers/sp500_companies.csv")
@@ -208,13 +208,13 @@ Advanced users can override this in two ways:
 
 - Pass a different model name:  
   ```python
-  from mixed_data_vectorizer import HybridVectorizer
+  from tabsearch import HybridVectorizer
   hv = HybridVectorizer(default_text_model="multi-qa-mpnet-base-dot-v1")
 Pass a pre-loaded model:
 
 python
 Copy code
-from mixed_data_vectorizer import HybridVectorizer
+from tabsearch import HybridVectorizer
 from sentence_transformers import SentenceTransformer
 
 custom_model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2", device="cuda")
@@ -256,13 +256,13 @@ Advanced users can override this in two ways:
 
 - Pass a different model name:  
   ```python
-  from mixed_data_vectorizer import HybridVectorizer
+  from tabsearch import HybridVectorizer
   hv = HybridVectorizer(default_text_model="multi-qa-mpnet-base-dot-v1")
   ```
 
 - Pass a pre-loaded model:  
   ```python
-  from mixed_data_vectorizer import HybridVectorizer
+  from tabsearch import HybridVectorizer
   from sentence_transformers import SentenceTransformer
 
   custom_model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2", device="cuda")
