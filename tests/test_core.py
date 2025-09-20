@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from hybrid_vectorizer import HybridVectorizer
+from tabsearch import HybridVectorizer
 
 # ---------- Fixtures ----------
 @pytest.fixture

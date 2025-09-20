@@ -1,11 +1,10 @@
 import logging
 import numpy as np
-from hybrid_vectorizer import HybridVectorizer
-import pandas as pd
-
+from tabsearch import HybridVectorizer
+from tabsearch.datasets import load_sp500_demo
 
 # ✅ Load stock data
-df = pd.read_csv("sp500_companies.csv")
+df = load_sp500_demo()
 
 # ✅ Select Columns to Use
 df = df[[

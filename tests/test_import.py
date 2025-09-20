@@ -1,2 +1,2 @@
 def test_import():
-    import hybrid_vectorizer  # noqa: F401
+    import tabsearch  # noqa: F401

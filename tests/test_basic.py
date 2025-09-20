@@ -2,7 +2,7 @@ import logging
 logging.getLogger('hybrid_vectorizer').setLevel(logging.WARNING)
 logging.getLogger('sentence_transformers').setLevel(logging.WARNING)
 import numpy as np
-from hybrid_vectorizer import HybridVectorizer
+from tabsearch import HybridVectorizer
 import pandas as pd
 import torch
 print(f"CUDA available: {torch.cuda.is_available()}")
