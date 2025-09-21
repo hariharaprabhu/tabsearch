@@ -2,6 +2,7 @@
 
 **Most similarity search breaks on real-world mixed datasets (text + numbers + categories). This package fixes that.**
 
+[![GitHub stars](https://img.shields.io/github/stars/hariharaprabhu/tabsearch?style=social)](https://github.com/hariharaprabhu/tabsearch/stargazers)
 [![PyPI](https://img.shields.io/pypi/v/tabsearch.svg)](https://pypi.org/project/tabsearch/)  
 [![Downloads](https://static.pepy.tech/badge/tabsearch)](https://pepy.tech/project/tabsearch)  
 [![License](https://img.shields.io/badge/license-Apache--2.0-black.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -54,9 +55,10 @@ print(results)  # Finds id=3 (both Tech + high price) over id=2 (different categ
 ```python
 import pandas as pd
 from tabsearch import HybridVectorizer
+from tabsearch.datasets import load_sp500_demo
 
 # Load real S&P 500 dataset
-df = pd.read_csv("https://raw.githubusercontent.com/hariharaprabhu/tabsearch/main/Examples/Similar%20Stock%20Tickers/sp500_companies.csv")
+df = load_sp500_demo()
 
 # Select mixed-type columns
 df = df[["Symbol", "Sector", "Industry", "Currentprice", "Marketcap", 
@@ -149,6 +151,19 @@ print("Categorical-heavy results:", categorical_heavy[['Symbol', 'Sector']].head
 - **Customer analytics** → Segment users by demographics + behavior + purchase history
 - **Content matching** → Similar articles by topic + engagement + metadata
 
+
+## ⚠️ Known Limitations
+
+- **First-time run is slow** → The package downloads a pre-trained sentence transformer (~100 MB). Subsequent runs are cached and much faster.
+
+- **Memory scaling** → Each additional 1,000 rows adds ~100 MB in memory usage. For very large datasets, use the FAISS integration.
+
+- **FAISS optional** → High-speed nearest neighbor search requires installing faiss-cpu (not bundled by default, especially tricky on macOS).
+
+- **GPU acceleration** → Recommended if you plan to embed text for 100K+ rows; otherwise CPU is fine for small/medium data.
+
+- **Mixed data assumption** → tabsearch is designed to handle text, categorical, and numerical data together.
+For text-only datasets, it still works effectively (via sentence-transformers), but its real advantage comes when your data mixes different types.
 ---
 
 ## 🔗 Advanced Usage
