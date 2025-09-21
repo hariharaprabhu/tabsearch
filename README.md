@@ -225,54 +225,6 @@ Advanced users can override this in two ways:
   ```python
   from tabsearch import HybridVectorizer
   hv = HybridVectorizer(default_text_model="multi-qa-mpnet-base-dot-v1")
-Pass a pre-loaded model:
-
-python
-Copy code
-from tabsearch import HybridVectorizer
-from sentence_transformers import SentenceTransformer
-
-custom_model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2", device="cuda")
-hv = HybridVectorizer(default_text_model=custom_model)
-Q: Does this scale to millions of rows?
-Yes, via external vector databases.
-By default, embeddings are stored in memory as NumPy arrays.
-For large datasets, connect to FAISS (or pgvector, Milvus, Qdrant) using:
-
-python
-Copy code
-hv.set_vector_db(faiss_index)
-Q: How do I evaluate similarity quality without labels?
-We recommend:
-
-Compare hybrid vs text-only vs numeric-only neighbors
-
-Use metrics like precision@k or nDCG if you have partial labels
-
-For exploratory use, inspect block-level contributions with explain_similarity()
-
-Q: How is this different from just using FAISS or Pinecone directly?
-Vector databases index embeddings but don’t handle mixed tabular data.
-tabsearch automatically:
-
-Detects column types
-
-Encodes each block appropriately
-
-Fuses them with configurable weights
-
-Provides explainable results
----
-## ❓ FAQ
-
-**Q: Can I use a different text model instead of the default?**  
-Yes. By default, `tabsearch` uses the `all-MiniLM-L6-v2` model from `sentence-transformers`.  
-Advanced users can override this in two ways:
-
-- Pass a different model name:  
-  ```python
-  from tabsearch import HybridVectorizer
-  hv = HybridVectorizer(default_text_model="multi-qa-mpnet-base-dot-v1")
   ```
 
 - Pass a pre-loaded model:  
