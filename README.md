@@ -2,11 +2,12 @@
 
 **Most similarity search breaks on real-world mixed datasets (text + numbers + categories). This package fixes that.**
 
-[![GitHub stars](https://img.shields.io/github/stars/hariharaprabhu/tabsearch?style=social)](https://github.com/hariharaprabhu/tabsearch/stargazers)
-[![PyPI](https://img.shields.io/pypi/v/tabsearch.svg)](https://pypi.org/project/tabsearch/)  
-[![Downloads](https://static.pepy.tech/badge/tabsearch)](https://pepy.tech/project/tabsearch)  
-[![License](https://img.shields.io/badge/license-Apache--2.0-black.svg)](https://opensource.org/licenses/Apache-2.0)
+[![PyPI](https://img.shields.io/pypi/v/tabsearch.svg)](https://pypi.org/project/tabsearch/) 
+[![Downloads](https://static.pepy.tech/badge/tabsearch)](https://pepy.tech/project/tabsearch) 
+[![License](https://img.shields.io/badge/license-Apache--2.0-black.svg)](https://opensource.org/licenses/Apache-2.0) 
 [![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![GitHub stars](https://img.shields.io/github/stars/hariharaprabhu/tabsearch?style=social)](https://github.com/hariharaprabhu/tabsearch/stargazers)
+
 
 > tabsearch makes **real-world datasets searchable** — by meaning, category, and numbers — all at once.
 

@@ -87,7 +87,7 @@ class HybridVectorizer:
         id_column: Optional[str] = None,
         date_feature_mode: Optional[str] = None,
         default_text_model: str = 'all-MiniLM-L6-v2',
-        onehot_threshold: int = 10,
+        onehot_threshold: int = 200,
         text_batch_size: int = 128,
         vector_db=None,
         default_block_weights: Optional[Dict[str, float]] = None,
@@ -144,10 +144,6 @@ class HybridVectorizer:
         logger.info("Setting external vector database.")
         self.vector_db = vector_db
 
-    def _frequency_encode(self, series):
-        logger.debug(f"Frequency encoding for {series.name}")
-        freq = series.value_counts(normalize=True)
-        return series.map(freq).fillna(0.0), freq.to_dict()
 
     def _normalize_numeric(self, series, scaler=None):
         if scaler is None:
@@ -187,11 +183,11 @@ class HybridVectorizer:
             nunique = s.nunique()
             avg_len = s.map(len).mean() if not s.empty else 0
             logger.info(f"[{col}] string column: nunique={nunique}, avg_len={avg_len:.1f}")
-            if nunique > 10:
-                logger.info(f"[{col}] -> text (nunique > 10)")
+            if nunique > self.onehot_threshold:
+                logger.info(f"[{col}] -> text (nunique > {self.onehot_threshold})") 
                 return "text"
             else:
-                logger.info(f"[{col}] -> categorical (not enough unique)")
+                logger.info(f"[{col}] -> categorical (nunique <= {self.onehot_threshold})")
                 return "categorical"
 
         logger.info(f"[{col}] -> categorical (fallback)")
@@ -345,19 +341,14 @@ class HybridVectorizer:
                 self.encoding_report[col] = {"type": "numerical", "encoding": "minmax"}
                 self.fitted_encoders[col] = scaler
             elif col_type == "categorical":
-                nunique = series.nunique(dropna=True)
-                if nunique <= self.onehot_threshold:
-                    encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
-                    encoded = encoder.fit_transform(series.values.reshape(-1, 1))
-                    categories = encoder.categories_[0]
-                    processed_blocks.append(('categorical', encoded, [f"{col}_oh_{cat}" for cat in categories]))
-                    self.encoding_report[col] = {"type": "categorical", "encoding": "onehot", "categories": list(categories)}
-                    self.fitted_encoders[col] = encoder
-                else:
-                    encoded, freq_map = self._frequency_encode(series.astype(str))
-                    processed_blocks.append(('categorical', encoded.values.reshape(-1, 1), [col]))
-                    self.encoding_report[col] = {"type": "categorical", "encoding": "frequency"}
-                    self.fitted_encoders[col] = freq_map
+                # SIMPLIFIED: Always use one-hot for categorical (no frequency encoding)
+                series_filled = series.fillna("__MISSING__").astype(str)
+                encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
+                encoded = encoder.fit_transform(series_filled.values.reshape(-1, 1))
+                categories = encoder.categories_[0]
+                processed_blocks.append(('categorical', encoded, [f"{col}_oh_{cat}" for cat in categories]))
+                self.encoding_report[col] = {"type": "categorical", "encoding": "onehot", "categories": list(categories)}
+                self.fitted_encoders[col] = encoder
             elif col_type == "text":
                 text_filled = series.fillna("").astype(str)
                 batch_size = self.text_batch_size if len(series) > self.text_batch_size else min(len(series), 32)
@@ -429,7 +420,7 @@ class HybridVectorizer:
                 
                 encoder = self.fitted_encoders[col]
                 cats = encoder.categories_[0]
-                
+                val = str(val) if val is not None else "__MISSING__"
                 if val is not None and val in cats:
                     # Create proper one-hot vector
                     result = np.zeros(len(cats), dtype=float)
@@ -471,10 +462,6 @@ class HybridVectorizer:
                 else:
                     return [0.0]
                     
-            elif feat in self.fitted_encoders and isinstance(self.fitted_encoders[feat], dict):
-                # Frequency encoding
-                freq_map = self.fitted_encoders[feat]
-                return [float(freq_map.get(str(val), 0.0))]
                 
             elif feat in self.fitted_encoders and hasattr(self.fitted_encoders[feat], 'transform'):
                 # Numerical scaling
@@ -518,6 +505,7 @@ class HybridVectorizer:
                 col, _, cat = feat.partition("_oh_")
                 if col not in processed_cols:
                     val = query_dict.get(col, None)
+                    val = str(val) if val is not None else "__MISSING__"
                     encoder = self.fitted_encoders.get(col)
                     if encoder:
                         cats = encoder.categories_[0]
@@ -596,15 +584,14 @@ class HybridVectorizer:
                 logger.warning(f"[{block_type}] dimension mismatch: block_matrix {block_matrix.shape}, query_vec {query_vec.shape}")
                 continue
             sims = cosine_similarity(block_matrix, query_vec).flatten()
-            '''
-            if block_type == 'text':
+            
+            if block_type in  ['text', 'categorical']:
                 sims_norm = sims  # No normalization for text
             else:
-            '''
-            sim_min, sim_max = np.min(sims), np.max(sims)
-            if sim_max > sim_min:
-                sims_norm = (sims - sim_min) / (sim_max - sim_min)
-            else:
+                sim_min, sim_max = np.min(sims), np.max(sims)
+                if sim_max > sim_min:
+                    sims_norm = (sims - sim_min) / (sim_max - sim_min)
+                else:
                     sims_norm = np.zeros_like(sims)
             
             # Proportional weighting
